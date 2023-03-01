@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.safeStopsProvider.SafeStopsProvider.model.User;
 import com.safeStopsProvider.SafeStopsProvider.repository.UserRepository;
 
-@CrossOrigin(origins = "http://localhost:8081")
-@RestController
+@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("/api/auth")
+@RestController
 public class AuthorizationController {
 	
 	@Autowired

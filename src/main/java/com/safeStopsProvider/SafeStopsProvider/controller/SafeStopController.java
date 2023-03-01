@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.safeStopsProvider.SafeStopsProvider.model.SafeStop;
 import com.safeStopsProvider.SafeStopsProvider.repository.SafeStopRepository;
 
-@CrossOrigin(origins = "http://localhost:8081")
-@RestController
+@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("/api")
+@RestController
 public class SafeStopController {
 	
 	@Autowired
