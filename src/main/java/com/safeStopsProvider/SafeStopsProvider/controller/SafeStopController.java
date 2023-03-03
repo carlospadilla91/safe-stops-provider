@@ -35,7 +35,7 @@ public class SafeStopController {
 		if(safeStops.isEmpty()) {
 			System.out.println("No SafeStops found");
 			return new ResponseEntity<List<SafeStop>>(HttpStatus.NOT_FOUND);
-		}
+		} 
 		return new ResponseEntity<List<SafeStop>>(safeStops, HttpStatus.OK);
 	}
 	
