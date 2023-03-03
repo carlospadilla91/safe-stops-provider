@@ -5,7 +5,10 @@ import java.util.List;
 import com.safeStopsProvider.SafeStopsProvider.model.User;
 
 public interface UserService {
-	public void createUser(User user);
-	public List<User> getAllUsers();
+	public void save(User user);
+	public List<User> findAll();
+	public User findByUsername(String username);
+	public Boolean existsByUsername(String username);
+	public Boolean existsByEmail(String email);
 
 }

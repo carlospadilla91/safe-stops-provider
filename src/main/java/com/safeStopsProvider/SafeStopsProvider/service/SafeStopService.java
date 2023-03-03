@@ -6,9 +6,9 @@ import com.safeStopsProvider.SafeStopsProvider.model.SafeStop;
 
 public interface SafeStopService {
 	public SafeStop findById(Long id);
-	public void saveSafeStop(SafeStop safeStop);
-	public void updateSafeStop(SafeStop safeStop);
-	public void deleteSafeStop(Long id);
-	public List<SafeStop> getAllSafeStops();
+	public void save(SafeStop safeStop);
+	public void update(SafeStop safeStop);
+	public void delete(Long id);
+	public List<SafeStop> findAll();
 
 }

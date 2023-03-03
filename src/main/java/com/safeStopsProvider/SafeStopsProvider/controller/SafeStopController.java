@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.safeStopsProvider.SafeStopsProvider.model.SafeStop;
-import com.safeStopsProvider.SafeStopsProvider.repository.SafeStopRepository;
+import com.safeStopsProvider.SafeStopsProvider.service.SafeStopService;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("/api")
@@ -24,13 +24,13 @@ import com.safeStopsProvider.SafeStopsProvider.repository.SafeStopRepository;
 public class SafeStopController {
 	
 	@Autowired
-	SafeStopRepository safeStopRepo;
+	SafeStopService service;
 	
 	// lists safeStops
 	@GetMapping("/safeStops")
 	public ResponseEntity<List<SafeStop>> getAllSafeStops() {
 		
-		List<SafeStop> safeStops = safeStopRepo.findAll();
+		List<SafeStop> safeStops = service.findAll();
 		
 		if(safeStops.isEmpty()) {
 			System.out.println("No SafeStops found");
@@ -43,7 +43,7 @@ public class SafeStopController {
 	@PostMapping("/safeStops")
 	public ResponseEntity<SafeStop> createNewSafeStop(@RequestBody SafeStop safeStop) {
 		
-		safeStopRepo.save(safeStop);
+		service.save(safeStop);
 		System.out.println("Created SafeStop with id of: " + safeStop.getId());
 		return new ResponseEntity<SafeStop>(safeStop, HttpStatus.OK);
 	}
@@ -53,7 +53,7 @@ public class SafeStopController {
 	public ResponseEntity<SafeStop> udpateSafeStop(@PathVariable("id") long id, @RequestBody SafeStop safeStop) {
 		
 		System.out.println("Updating SafeStop with id of: " + id);
-		SafeStop currentSafeStop = safeStopRepo.findById(id).get();
+		SafeStop currentSafeStop = service.findById(id);
 		
 		if(currentSafeStop == null) {
 			System.out.println("SafeStop with id of: " + id + " not found");
@@ -64,7 +64,7 @@ public class SafeStopController {
 		currentSafeStop.setDescription(safeStop.getDescription());
 		currentSafeStop.setRating(safeStop.getRating());
 		
-		safeStopRepo.save(currentSafeStop);
+		service.update(currentSafeStop);
 		return new ResponseEntity<SafeStop>(currentSafeStop, HttpStatus.OK);
 	}
 	
@@ -72,14 +72,14 @@ public class SafeStopController {
 	@DeleteMapping("safeStops/{id}")
 	public ResponseEntity<SafeStop> deleteSafeStop(@PathVariable("id") long id) {
 		System.out.println("Deleting SafeStop with id of: " + id);
-		SafeStop safeStopToDelete = safeStopRepo.getById(id);
+		SafeStop safeStopToDelete = service.findById(id);
 		
 		if(safeStopToDelete == null) {
 			System.out.println("SafeStop with id of: " + id + " not found to delete");
 			return new ResponseEntity<SafeStop>(HttpStatus.NOT_FOUND);
 		}
 		
-		safeStopRepo.delete(safeStopToDelete);
+		service.delete(id);
 		return new ResponseEntity<SafeStop>(HttpStatus.NO_CONTENT);
 	}
 

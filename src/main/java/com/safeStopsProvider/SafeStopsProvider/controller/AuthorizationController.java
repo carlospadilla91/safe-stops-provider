@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.safeStopsProvider.SafeStopsProvider.model.User;
-import com.safeStopsProvider.SafeStopsProvider.repository.UserRepository;
+import com.safeStopsProvider.SafeStopsProvider.service.UserService;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("/api/auth")
@@ -18,17 +18,17 @@ import com.safeStopsProvider.SafeStopsProvider.repository.UserRepository;
 public class AuthorizationController {
 	
 	@Autowired
-	private UserRepository userRepo;
+	private UserService service;
 	
 	// creates user
 	@PostMapping("/register")
 	public ResponseEntity<User> registerUser(@RequestBody User user) {
 		
-		if(userRepo.existsByUsername(user.getUsername())) {
+		if(service.existsByUsername(user.getUsername())) {
 			System.out.println("Failed to create user. Username exists");
 			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 		}
-		if(userRepo.existsByEmail(user.getEmail())) {
+		if(service.existsByEmail(user.getEmail())) {
 			System.out.println("Failed to create user. Email already exists.");
 			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 		}
@@ -38,7 +38,8 @@ public class AuthorizationController {
 		newUser.setEmail(user.getEmail());
 		newUser.setPassword(user.getPassword());
 		
-		userRepo.save(newUser);
+		System.out.println("New user created");
+		service.save(newUser);
 		return new ResponseEntity<User>(newUser, HttpStatus.OK);
 	}
 	
@@ -48,9 +49,9 @@ public class AuthorizationController {
 		
 		
 		
-		if(userRepo.existsByUsername(user.getUsername())) {
+		if(service.existsByUsername(user.getUsername())) {
 			
-			User activeUser = userRepo.findByUsername(user.getUsername());
+			User activeUser = service.findByUsername(user.getUsername());
 			
 			if(activeUser.getPassword().equals(user.getPassword())) {
 				System.out.println("User: " + user.getUsername() + " has successfully logged in.");

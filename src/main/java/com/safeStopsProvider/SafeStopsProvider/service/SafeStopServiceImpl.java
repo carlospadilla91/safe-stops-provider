@@ -16,26 +16,26 @@ public class SafeStopServiceImpl implements SafeStopService {
 	
 	@Override
 	public SafeStop findById(Long id) {
-		return safeStopRepo.getById(id);
+		return safeStopRepo.findById(id).get();
 	}
 
 	@Override
-	public void saveSafeStop(SafeStop safeStop) {
+	public void save(SafeStop safeStop) {
 		safeStopRepo.save(safeStop);
 	}
 
 	@Override
-	public void updateSafeStop(SafeStop safeStop) {
+	public void update(SafeStop safeStop) {
 		safeStopRepo.save(safeStop);
 	}
 
 	@Override
-	public void deleteSafeStop(Long id) {
+	public void delete(Long id) {
 		safeStopRepo.deleteById(id);
 	}
 
 	@Override
-	public List<SafeStop> getAllSafeStops() {
+	public List<SafeStop> findAll() {
 		return safeStopRepo.findAll();
 	}
 	
