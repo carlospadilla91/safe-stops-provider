@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.safeStopsProvider.SafeStopsProvider.model.SafeStop;
 
-@CrossOrigin
-@Repository
 public interface SafeStopRepository extends JpaRepository<SafeStop, Long> {
 
 }

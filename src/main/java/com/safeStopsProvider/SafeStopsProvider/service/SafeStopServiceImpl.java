@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.safeStopsProvider.SafeStopsProvider.exception.NotFoundException;
 import com.safeStopsProvider.SafeStopsProvider.model.SafeStop;
 import com.safeStopsProvider.SafeStopsProvider.repository.SafeStopRepository;
 
@@ -16,17 +17,25 @@ public class SafeStopServiceImpl implements SafeStopService {
 	
 	@Override
 	public SafeStop findById(Long id) {
-		return safeStopRepo.findById(id).get();
+		return safeStopRepo.findById(id).orElseThrow(() -> new NotFoundException("SafeStop not found", id));
 	}
 
 	@Override
-	public void save(SafeStop safeStop) {
-		safeStopRepo.save(safeStop);
+	public SafeStop save(SafeStop safeStop) {
+		return safeStopRepo.save(safeStop);
 	}
 
 	@Override
-	public void update(SafeStop safeStop) {
-		safeStopRepo.save(safeStop);
+	public SafeStop update(Long id, SafeStop safeStop) {
+		
+		SafeStop current = findById(id);
+		
+		current.setName(safeStop.getName());
+		current.setDescription(safeStop.getDescription());
+		current.setRating(safeStop.getRating());
+		
+		System.out.println(current);
+		return safeStopRepo.save(current);
 	}
 
 	@Override

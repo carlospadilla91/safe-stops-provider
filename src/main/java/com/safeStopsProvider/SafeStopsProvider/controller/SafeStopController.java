@@ -64,7 +64,7 @@ public class SafeStopController {
 		currentSafeStop.setDescription(safeStop.getDescription());
 		currentSafeStop.setRating(safeStop.getRating());
 		
-		service.update(currentSafeStop);
+		service.update(id, currentSafeStop);
 		return new ResponseEntity<SafeStop>(currentSafeStop, HttpStatus.OK);
 	}
 	
